@@ -71,7 +71,7 @@ function convertToHSL(r, g, b) {
     
     h = Math.round(h);
     s = Math.round(s);
-    l = Math.round(l)
+    l = Math.round(l);
     console.log("hsl(%f,%f%,%f%)", h, s, l); // just for testing
     showHSL(h, s, l);
 }
