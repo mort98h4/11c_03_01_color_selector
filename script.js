@@ -5,16 +5,20 @@ window.addEventListener("DOMContentLoaded", start);
 function start() {
     console.log("start");
     const colorValue = document.querySelector("#colorPicker").value;
+    getTheHex(colorValue);
+
+    document.querySelector("#colorPicker").addEventListener("input", getTheHex);
+}
+
+function getTheHex() {
+    const colorValue = document.querySelector("#colorPicker").value;
     console.log(colorValue);
+    changeBoxColor(colorValue);
+    showHex(colorValue);
     convertToRGB(colorValue);
 }
 
-function convertToHex() {
-    console.log("convertToHex");
-}
-
 function convertToRGB(hexColor) {
-    console.log(hexColor);
     hexColor = hexColor.substring(1);
     let r = hexColor.substring(0, 2);
     let g = hexColor.substring(2, 4);
@@ -23,12 +27,11 @@ function convertToRGB(hexColor) {
     g = Number.parseInt(g, 16);
     b = Number.parseInt(b, 16);
     console.log({r, g, b});
+    showRGB(r, g, b);
     convertToHSL(r, g, b);
 }
 
 function convertToHSL(r, g, b) {
-    console.log(r, g, b);
-
     r /= 255;
     g /= 255;
     b /= 255;
@@ -65,6 +68,27 @@ function convertToHSL(r, g, b) {
     // multiply s and l by 100 to get the value in percent, rather than [0,1]
     s *= 100;
     l *= 100;
- 
+    
+    h = Math.round(h);
+    s = Math.round(s);
+    l = Math.round(l)
     console.log("hsl(%f,%f%,%f%)", h, s, l); // just for testing
+    showHSL(h, s, l);
+}
+
+function showHex(hexColor) {
+    hexColor = hexColor.toUpperCase();
+    document.querySelector("#hex").textContent = `HEX: ${hexColor}`;
+}
+
+function showRGB(r, g, b) {
+    document.querySelector("#rgb").textContent = `R: ${r} G: ${g} B: ${b}`;
+}
+
+function showHSL(h, s, l) {
+    document.querySelector("#hsl").textContent = `H: ${h} S: ${s}% L: ${l}%`;
+}
+
+function changeBoxColor(hexColor) {
+    document.querySelector(".box").style.backgroundColor = hexColor;
 }
